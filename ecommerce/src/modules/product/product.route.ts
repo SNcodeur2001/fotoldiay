@@ -2,7 +2,7 @@ import { Router } from "express";
 import { ProductController } from "./product.controller.js";
 import { ProductService } from "./product.service.js";
 import { ProductRepository } from "./product.repository.js";
-import { authenticateToken } from "../utilisateur/auth/auth.route.js";
+import { authenticateToken, optionalAuthenticateToken } from "../utilisateur/auth/auth.route.js";
 
 const router = Router();
 
@@ -33,8 +33,8 @@ router.post(
   validatePriceMiddleware,
   controller.create.bind(controller)
 );
-router.get("/", controller.getAll.bind(controller));
-router.get("/:id", controller.getOne.bind(controller));
+router.get("/", optionalAuthenticateToken, controller.getAll.bind(controller));
+router.get("/:id", optionalAuthenticateToken, controller.getOne.bind(controller));
 router.put(
   "/:id",
   authenticateToken,

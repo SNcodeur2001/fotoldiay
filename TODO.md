@@ -1,26 +1,8 @@
-# TODO - Système de Modération des Produits
+# TODO: Fix Product Search Errors and Enforce Validated Products for Visitors
 
-## Backend
-- [x] Ajouter middleware d'authentification pour routes de modération (GESTIONNAIRE requis)
-- [x] Tester les permissions des routes approve/reject
-
-## Frontend - Services
-- [x] Ajouter méthodes approveProduct() et rejectProduct() dans ProductService
-
-## Frontend - Pages
-- [x] Créer page de modération (/moderation) pour gestionnaires
-- [x] Modifier list.html pour afficher boutons approuver/rejeter si GESTIONNAIRE
-
-## Frontend - Routes
-- [x] Ajouter route /moderation dans app.routes.ts
-
-## Frontend - Auth Guards
-- [x] Créer guard pour vérifier rôle GESTIONNAIRE
-
-## Notifications
-- [ ] Ajouter notifications backend pour informer vendeurs des décisions
-- [ ] Afficher notifications frontend
-
-## Tests
-- [ ] Tester flux complet : publication -> modération -> notification
-- [ ] Vérifier permissions utilisateur
+## Tasks
+- [x] Fix search errors in product.service.ts by removing 'mode: insensitive'
+- [x] Enforce validated products only for visitors/non-managers in product.controller.ts getAll method
+- [x] Update frontend ProductResponse interface to use 'total' instead of 'count'
+- [x] Adjust list.ts to use 'total' from response
+- [x] Test the changes: verify search works and visitors only see validated products

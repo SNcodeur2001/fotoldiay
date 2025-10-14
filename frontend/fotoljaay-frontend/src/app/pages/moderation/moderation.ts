@@ -57,8 +57,8 @@ export class Moderation implements OnInit {
     this.productService.getAllProducts(params).subscribe({
       next: (response: ProductResponse) => {
         this.products = response.data;
-        this.totalCount = response.count;
-        this.totalPages = Math.ceil(response.count / 12);
+        this.totalCount = response.total;
+        this.totalPages = Math.ceil(response.total / 12);
         this.isLoading = false;
       },
       error: (error) => {

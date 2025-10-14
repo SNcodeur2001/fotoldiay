@@ -41,7 +41,7 @@ export interface ProductInput {
 export interface ProductResponse {
   page: number;
   limit: number;
-  count: number;
+  total: number;
   data: Product[];
   message: string;
 }

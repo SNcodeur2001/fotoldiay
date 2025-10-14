@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { AuthService } from '../../../services/auth';
   templateUrl: './list.html',
   styleUrl: './list.css'
 })
-export class List implements OnInit {
+export class List implements OnInit, OnDestroy {
   products: Product[] = [];
   categories: Category[] = [];
   isLoading = false;
@@ -61,10 +61,9 @@ export class List implements OnInit {
 
     if (this.selectedCategory) params.categoryId = this.selectedCategory;
 
-    // Pour les visiteurs non connectés, forcer le filtre sur les produits validés uniquement
-    if (!this.isAuthenticated()) {
-      params.status = 'VALIDE';
-    } else if (this.selectedStatus) {
+    // Pour les visiteurs non connectés, le backend force déjà le filtre sur les produits validés
+    // Pour les utilisateurs connectés, appliquer le filtre de statut sélectionné
+    if (this.selectedStatus) {
       params.status = this.selectedStatus;
     }
 
@@ -73,8 +72,8 @@ export class List implements OnInit {
     this.productService.getAllProducts(params).subscribe({
       next: (response: ProductResponse) => {
         this.products = response.data;
-        this.totalCount = response.count;
-        this.totalPages = Math.ceil(response.count / 12);
+        this.totalCount = response.total;
+        this.totalPages = Math.ceil(response.total / 12);
         this.isLoading = false;
       },
       error: (error) => {
@@ -96,9 +95,22 @@ export class List implements OnInit {
   }
 
   onSearch() {
-    this.currentPage = 1;
-    this.loadProducts();
+    // Debounce search to avoid too many API calls
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.currentPage = 1;
+      this.loadProducts();
+    }, 300);
   }
+
+  ngOnDestroy() {
+    // Clear timeout on component destroy
+    if (this.searchTimeout) {
+      clearTimeout(this.searchTimeout);
+    }
+  }
+
+  private searchTimeout: any;
 
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {

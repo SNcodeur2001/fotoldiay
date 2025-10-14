@@ -97,9 +97,15 @@ export class ProductController extends BaseController<Product, CreateProductDto,
       const limit = parseInt(req.query.limit as string) || 12;
       const search = (req.query.search as string) || undefined;
       const categoryId = (req.query.categoryId as string) || undefined;
-      const status = (req.query.status as string) as ProductStatus || undefined;
+      let status = (req.query.status as string) as ProductStatus || undefined;
       const isVip = req.query.isVip ? req.query.isVip === 'true' : undefined;
       const userId = (req.query.userId as string) || undefined;
+
+      // Pour les visiteurs non connectés, forcer l'affichage des produits validés uniquement
+      const authHeader = req.headers['authorization'];
+      if (!authHeader) {
+        status = ProductStatus.VALIDE;
+      }
 
       const result = await this.service.findAll({
         page,

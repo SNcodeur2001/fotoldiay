@@ -40,6 +40,23 @@ export const authenticateToken = (req: Request, res: Response, next: any) => {
   });
 };
 
+// Optional middleware to verify JWT token (doesn't fail if no token)
+export const optionalAuthenticateToken = (req: Request, res: Response, next: any) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token) {
+    jwt.verify(token, JWT_SECRET, (err: any, user: any) => {
+      if (!err) {
+        (req as any).user = user;
+      }
+      next();
+    });
+  } else {
+    next();
+  }
+};
+
 // Login route
 router.post('/login', async (req: Request, res: Response) => {
   try {

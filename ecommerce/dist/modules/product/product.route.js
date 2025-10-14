@@ -2,7 +2,7 @@ import { Router } from "express";
 import { ProductController } from "./product.controller.js";
 import { ProductService } from "./product.service.js";
 import { ProductRepository } from "./product.repository.js";
-import { authenticateToken } from "../utilisateur/auth/auth.route.js";
+import { authenticateToken, optionalAuthenticateToken } from "../utilisateur/auth/auth.route.js";
 const router = Router();
 // Instanciation des dépendances
 const repository = new ProductRepository();
@@ -24,8 +24,8 @@ const validatePriceMiddleware = async (req, res, next) => {
 // Routes CRUD de base
 // POST requires authentication for creating products
 router.post("/", authenticateToken, validatePriceMiddleware, controller.create.bind(controller));
-router.get("/", controller.getAll.bind(controller));
-router.get("/:id", controller.getOne.bind(controller));
+router.get("/", optionalAuthenticateToken, controller.getAll.bind(controller));
+router.get("/:id", optionalAuthenticateToken, controller.getOne.bind(controller));
 router.put("/:id", authenticateToken, validatePriceMiddleware, controller.update.bind(controller));
 router.delete("/:id", authenticateToken, controller.delete.bind(controller));
 // Routes spécifiques aux vendeurs
