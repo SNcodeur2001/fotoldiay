@@ -1,0 +1,140 @@
+/* Navbar avec effet glassmorphism */
+nav {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-soft);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Logo avec animation */
+.navbar-logo {
+  transition: var(--transition-smooth);
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+}
+
+/* Liens de navigation */
+.nav-link {
+  position: relative;
+  transition: var(--transition-smooth);
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-gradient);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::before {
+  width: 100%;
+}
+
+.nav-link:hover {
+  color: #667eea;
+  transform: translateY(-1px);
+}
+
+/* Menu utilisateur avec animation */
+.user-menu {
+  position: relative;
+}
+
+.user-menu-button {
+  display: flex;
+  align-items: center;
+  space-x: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  transition: var(--transition-smooth);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.user-menu-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow-hover);
+  animation: slideInDown 0.3s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  transition: var(--transition-smooth);
+  border-radius: 0.5rem;
+  margin: 0.25rem 0.5rem;
+}
+
+.dropdown-item:hover {
+  background: var(--accent-gradient);
+  color: white;
+  transform: translateX(4px);
+}
+
+/* Bouton mobile menu */
+.mobile-menu-button {
+  transition: var(--transition-smooth);
+  border-radius: 0.5rem;
+}
+
+.mobile-menu-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Menu mobile */
+.mobile-menu {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--glass-border);
+  animation: slideInDown 0.4s ease-out;
+}
+
+.mobile-nav-link {
+  transition: var(--transition-smooth);
+  border-radius: 0.5rem;
+  margin: 0.25rem 0.5rem;
+}
+
+.mobile-nav-link:hover {
+  background: var(--primary-gradient);
+  color: white;
+  transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    padding: 0.5rem 1rem;
+  }
+
+  .navbar-logo {
+    font-size: 1.25rem;
+  }
+}

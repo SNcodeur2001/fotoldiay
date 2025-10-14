@@ -1,0 +1,123 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <!-- Logo/Brand -->
+    <div class="text-center mb-8 animate-fade-in">
+      <div class="w-20 h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg">
+        <span class="text-2xl">🛍️</span>
+      </div>
+      <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        FotolJaay
+      </h1>
+      <p class="text-gray-600 mt-2">Connectez-vous à votre compte</p>
+    </div>
+
+    <!-- Login Form -->
+    <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 animate-scale-in">
+      <form (ngSubmit)="onSubmit()" class="space-y-6">
+        <!-- login Field -->
+        <div>
+          <label for="login" class="block text-sm font-medium text-gray-700 mb-2">
+            📧 Adresse login
+          </label>
+          <input
+            id="login"
+            type="login"
+            [(ngModel)]="loginData.login"
+            name="login"
+            required
+            placeholder="votre.login@exemple.com"
+            class="input-field"
+            [class.border-red-300]="errorMessage"
+          />
+        </div>
+
+        <!-- Password Field -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+            🔒 Mot de passe
+          </label>
+          <input
+            id="password"
+            type="password"
+            [(ngModel)]="loginData.password"
+            name="password"
+            required
+            placeholder="Votre mot de passe"
+            class="input-field"
+            [class.border-red-300]="errorMessage"
+          />
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg animate-fade-in">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="font-medium">{{ errorMessage }}</p>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          [disabled]="isLoading"
+          class="w-full btn-primary py-3 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 active:scale-95"
+        >
+          <span *ngIf="isLoading" class="inline-block mr-2">
+            <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </span>
+          <span *ngIf="!isLoading">🚀 Se connecter</span>
+        </button>
+      </form>
+
+      <!-- Demo Accounts -->
+      <div class="mt-8 pt-6 border-t border-gray-200">
+        <h3 class="text-sm font-medium text-gray-700 mb-4 text-center">Comptes de démonstration</h3>
+        <div class="space-y-3">
+          <button
+            (click)="setDemoCredentials('vendeur')"
+            class="w-full text-left p-3 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg hover:from-green-100 hover:to-emerald-100 transition-all duration-200"
+          >
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-medium text-green-800">Vendeur</p>
+                <p class="text-sm text-green-600">fatou.ndiaye@ecommerce.sn</p>
+              </div>
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </button>
+
+          <button
+            (click)="setDemoCredentials('visiteur')"
+            class="w-full text-left p-3 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg hover:from-blue-100 hover:to-indigo-100 transition-all duration-200"
+          >
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-medium text-blue-800">Visiteur</p>
+                <p class="text-sm text-blue-600">mapathendiaye542@gmail.com</p>
+              </div>
+              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+            </div>
+
+      <!-- Register Link -->
+      <div class="mt-6 text-center">
+        <p class="text-gray-600">
+          Pas encore de compte ?
+          <a routerLink="/register" class="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-200">
+            Créer un compte
+          </a>
+        </p>
+      </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-8 text-sm text-gray-500 animate-fade-in">
+      <p>© 2024 FotolJaay - Votre marketplace de confiance</p>
+    </div>

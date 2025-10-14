@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  telephone String   @unique
+  adresse   String
+  role      UserRole @default(VENDEUR)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  products      Product[]
+  notifications Notification[]
+
+  @@map("users")
+}
+
+model Product {
+  id             String        @id @default(uuid())
+  title          String
+  description    String?
+  price          Float
+  imageUrl       String?       @db.Text
+  status         ProductStatus @default(EN_ATTENTE)
+  dateExpiration DateTime?
+  viewCount      Int           @default(0)
+  isVip          Boolean       @default(false)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  // Relations
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([status])
+  @@index([isVip])
+  @@map("products")
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  libelle     String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  products Product[]
+
+  @@map("categories")
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  isRead    Boolean          @default(false)
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime         @default(now())
+
+  @@index([userId])
+  @@index([isRead])
+  @@map("notifications")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  VENDEUR
+  GESTIONNAIRE
+  VISITEUR
+}
+
+enum ProductStatus {
+  EN_ATTENTE
+  VALIDE
+  EXPIRE
+  SUPPRIME
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  SUCCESS
+  ERROR
+}
