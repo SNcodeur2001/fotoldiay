@@ -1,16 +1,16 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 animate-fade-in">
+<div class="min-h-screen bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8 animate-fade-in">
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
     <div class="flex justify-center animate-scale-in">
-      <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg animate-pulse-custom">
-        <span class="text-white font-bold text-2xl">FJ</span>
+      <div class="w-16 h-16 bg-black rounded-xl flex items-center justify-center shadow-lg animate-pulse-custom">
+        <i class="fas fa-camera text-white font-bold text-2xl"></i>
       </div>
     </div>
-    <h2 class="mt-6 text-center text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-slide-in">
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-black animate-slide-in">
       Créer un compte FotolJaay
     </h2>
-    <p class="mt-2 text-center text-sm text-gray-600">
+    <p class="mt-2 text-center text-sm text-black">
       Ou
-      <a routerLink="/login" class="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-200">
+      <a routerLink="/login" class="font-medium text-black hover:text-gray-600 transition-colors duration-200">
         connectez-vous à votre compte
       </a>
     </p>
@@ -19,33 +19,33 @@
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="card p-8 animate-scale-in">
       <form class="space-y-6" (ngSubmit)="onSubmit()" #registerForm="ngForm">
-        <div *ngIf="errorMessage" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
-          {{ errorMessage }}
+        <div *ngIf="errorMessage" class="bg-gray-50 border border-black text-black px-4 py-3 rounded-md">
+          <i class="fas fa-exclamation-triangle mr-2"></i>{{ errorMessage }}
         </div>
 
         <div class="grid grid-cols-1 gap-6">
           <div>
-            <label class="block text-sm font-medium text-gray-700">Nom complet *</label>
+            <label class="block text-sm font-medium text-black"><i class="fas fa-user mr-2"></i>Nom complet *</label>
             <input type="text" [(ngModel)]="registerData.name" name="name" required class="input-field" placeholder="Votre nom complet">
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700">Email *</label>
+            <label class="block text-sm font-medium text-black"><i class="fas fa-envelope mr-2"></i>Email *</label>
             <input type="email" [(ngModel)]="registerData.email" name="email" required class="input-field" placeholder="votre@email.com">
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700">Téléphone</label>
+            <label class="block text-sm font-medium text-black"><i class="fas fa-phone mr-2"></i>Téléphone</label>
             <input type="tel" [(ngModel)]="registerData.telephone" name="telephone" class="input-field" placeholder="+221701234567">
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700">Adresse</label>
+            <label class="block text-sm font-medium text-black"><i class="fas fa-map-marker-alt mr-2"></i>Adresse</label>
             <input type="text" [(ngModel)]="registerData.adresse" name="adresse" class="input-field" placeholder="Dakar, Sénégal">
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700">Type de compte</label>
+            <label class="block text-sm font-medium text-black"><i class="fas fa-user-tag mr-2"></i>Type de compte</label>
             <select [(ngModel)]="registerData.role" name="role" class="input-field">
               <option value="VISITEUR">Visiteur (consultation uniquement)</option>
               <option value="VENDEUR">Vendeur (peut publier des produits)</option>
@@ -53,15 +53,15 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700">Mot de passe *</label>
+            <label class="block text-sm font-medium text-black"><i class="fas fa-lock mr-2"></i>Mot de passe *</label>
             <input type="password" [(ngModel)]="registerData.password" name="password" required class="input-field" placeholder="Minimum 6 caractères">
           </div>
         </div>
 
         <div>
           <button type="submit" [disabled]="isLoading" class="btn-primary w-full hover:scale-105 active:scale-95">
-            <span *ngIf="isLoading">Création du compte...</span>
-            <span *ngIf="!isLoading">Créer mon compte</span>
+            <span *ngIf="isLoading"><i class="fas fa-spinner fa-spin mr-2"></i>Création du compte...</span>
+            <span *ngIf="!isLoading"><i class="fas fa-user-plus mr-2"></i>Créer mon compte</span>
           </button>
         </div>
       </form>
